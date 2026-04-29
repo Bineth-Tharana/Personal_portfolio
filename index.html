@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bineth Tharana</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <!-- Three.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+</head>
+<body>
+
+  <!-- ─── CURSOR ─────────────────────────────────────────────── -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
+
+  <canvas id="bgCanvas" class="bg-canvas"></canvas>
+
+  <!-- ─── NAV ───────────────────────────────────────────────── -->
+  <nav class="nav" id="nav">
+    <div class="nav-logo">
+      <span>BT</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-status">
+      <span class="status-dot"></span>
+      <span>Available for internships</span>
+    </div>
+  </nav>
+
+  <!-- ─── HERO ──────────────────────────────────────────────── -->
+  <section class="hero" id="hero">
+    <div class="hero-grid-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-tag">// Software Engineering Undergraduate</p>
+      <h1 class="hero-name">
+        <span class="line">Bineth</span>
+        <span class="line accent">Tharana</span>
+      </h1>
+      <p class="hero-sub">
+        <!-- UPDATE: Short tagline about yourself -->
+        Building thoughtful software &amp; exploring the edge of tech —<br/>
+        University of Kelaniya, Sri Lanka.
+      </p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn-primary">View Projects</a>
+        <a href="#contact" class="btn-ghost">Get in Touch</a>
+      </div>
+    </div>
+    <div class="hero-badge">
+      <!-- 3D animated canvas -->
+<canvas id="heroCanvas" class="hero-canvas"></canvas>
+      <svg viewBox="0 0 120 120" class="badge-ring">
+        <path id="circlePath" d="M 60,60 m -45,0 a 45,45 0 1,1 90,0 a 45,45 0 1,1 -90,0"/>
+        <!-- UPDATE: Change this text if you like -->
+        <text><textPath href="#circlePath">University of Kelaniya • Sri Lanka • SE Undergraduate •</textPath></text>
+      </svg>
+      <div class="badge-center">💻</div>
+    </div>
+  </section>
+
+  <!-- ─── ABOUT ─────────────────────────────────────────────── -->
+  <section class="about section" id="about">
+    <div class="section-label">01 / About</div>
+    <div class="about-grid">
+      <div class="about-text">
+        <h2 class="section-title">Who I am</h2>
+        <!-- UPDATE: Your bio below -->
+        <p>
+          I'm a passionate Software Engineering undergraduate at the University of Kelaniya,
+          driven by curiosity and a love for building things that matter. I enjoy working
+          across the stack — from crafting clean UIs to designing robust back-end systems.
+        </p>
+        <p>
+          When I'm not coding, I'm probably exploring new frameworks, contributing to
+          open-source, or binge-watching tech talks. I'm actively looking for internship
+          opportunities to turn my academic knowledge into real-world impact.
+        </p>
+        <div class="about-facts">
+          <!-- UPDATE: Your details below -->
+          <div class="fact"><span class="fact-label">University</span><span>University of Kelaniya</span></div>
+          <div class="fact"><span class="fact-label">Degree</span><span>BSc. Software Engineering</span></div>
+          <div class="fact"><span class="fact-label">Year</span><span>2nd Year (2024/25)</span></div>
+          <div class="fact"><span class="fact-label">Location</span><span>Sri Lanka</span></div>
+        </div>
+      </div>
+      <div class="about-image-wrap">
+        <!-- UPDATE: Replace src with your photo path, e.g. "photo.jpg" -->
+        <div class="about-image-placeholder">
+          <img src="images/pic_2.jpg" alt="Bineth Tharana" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SKILLS ────────────────────────────────────────────── -->
+  <section class="skills section" id="skills">
+    <div class="section-label">02 / Skills</div>
+    <h2 class="section-title">What I work with</h2>
+    <div class="skills-grid">
+      <!-- UPDATE: Edit skill names and proficiency (data-level = 0–100) -->
+      <div class="skill-category">
+        <h3>Languages</h3>
+        <div class="skill-item" data-level="85"><span>Java</span><div class="skill-bar"><div class="skill-fill"></div></div></div>
+        <div class="skill-item" data-level="80"><span>Python</span><div class="skill-bar"><div class="skill-fill"></div></div></div>
+        <div class="skill-item" data-level="75"><span>JavaScript</span><div class="skill-bar"><div class="skill-fill"></div></div></div>
+        <div class="skill-item" data-level="60"><span>C / C++</span><div class="skill-bar"><div class="skill-fill"></div></div></div>
+      </div>
+      <div class="skill-category">
+        <h3>Frameworks & Tools</h3>
+        <div class="skill-item" data-level="70"><span>React</span><div class="skill-bar"><div class="skill-fill"></div></div></div>
+        <div class="skill-item" data-level="65"><span>Spring Boot</span><div class="skill-bar"><div class="skill-fill"></div></div></div>
+        <div class="skill-item" data-level="75"><span>Node.js</span><div class="skill-bar"><div class="skill-fill"></div></div></div>
+        <div class="skill-item" data-level="70"><span>Git & GitHub</span><div class="skill-bar"><div class="skill-fill"></div></div></div>
+      </div>
+      <div class="skill-category">
+        <h3>Databases & Others</h3>
+        <div class="skill-item" data-level="72"><span>MySQL</span><div class="skill-bar"><div class="skill-fill"></div></div></div>
+        <div class="skill-item" data-level="60"><span>MongoDB</span><div class="skill-bar"><div class="skill-fill"></div></div></div>
+        <div class="skill-item" data-level="65"><span>REST APIs</span><div class="skill-bar"><div class="skill-fill"></div></div></div>
+        <div class="skill-item" data-level="55"><span>Docker</span><div class="skill-bar"><div class="skill-fill"></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── PROJECTS ──────────────────────────────────────────── -->
+  <section class="projects section" id="projects">
+    <div class="section-label">03 / Projects</div>
+    <h2 class="section-title">Things I've built</h2>
+    <div class="projects-grid">
+
+      <!-- UPDATE: Edit each project card with your own projects -->
+      <div class="project-card">
+        <div class="project-number">01</div>
+        <div class="project-tags"><span>JavaScript</span><span>HTML</span><span>CSS</span></div>
+        <h3>Amazon Clone</h3>
+        <p>A full-stack web app for managing books, members, and borrowings with role-based authentication and a RESTful API backend.</p>
+        <div class="project-links">
+          <!-- UPDATE: Replace # with your actual GitHub / demo URLs -->
+          <a href="#" target="_blank">GitHub →</a>
+          <a href="#" target="_blank">Live Demo →</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-number">02</div>
+        <div class="project-tags"><span>Python</span><span>Flask</span><span>ML</span></div>
+        <h3>Student Performance Predictor</h3>
+        <p>Machine learning model that predicts student exam outcomes based on study habits, attendance, and prior scores. Built with scikit-learn and Flask.</p>
+        <div class="project-links">
+          <a href="#" target="_blank">GitHub →</a>
+          <a href="#" target="_blank">Live Demo →</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-number">03</div>
+        <div class="project-tags"><span>React</span><span>Node.js</span><span>MongoDB</span></div>
+        <h3>Task Manager App</h3>
+        <p>A collaborative task management tool with real-time updates, drag-and-drop boards, and user authentication using JWT.</p>
+        <div class="project-links">
+          <a href="#" target="_blank">GitHub →</a>
+          <a href="#" target="_blank">Live Demo →</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-number">04</div>
+        <div class="project-tags"><span>HTML</span><span>CSS</span><span>JS</span></div>
+        <h3>Portfolio Website</h3>
+        <p>This very portfolio — designed and built from scratch with pure HTML, CSS, and vanilla JavaScript. No frameworks, no shortcuts.</p>
+        <div class="project-links">
+          <a href="#" target="_blank">GitHub →</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─── CONTACT ───────────────────────────────────────────── -->
+  <section class="contact section" id="contact">
+    <div class="section-label">04 / Contact</div>
+    <div class="contact-inner">
+      <h2 class="section-title">Let's connect</h2>
+      <p class="contact-desc">
+        Whether it's an internship, a collaboration, or just a conversation about tech —
+        my inbox is always open.
+      </p>
+      <!-- UPDATE: Replace with your actual email -->
+      <a href="mailto:yourname@gmail.com" class="contact-email">yourname@gmail.com</a>
+      <div class="social-links">
+        <!-- UPDATE: Replace # with your actual profile URLs -->
+        <a href="#" target="_blank" class="social-btn">GitHub</a>
+        <a href="#" target="_blank" class="social-btn">LinkedIn</a>
+        <a href="#" target="_blank" class="social-btn">Twitter / X</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ────────────────────────────────────────────── -->
+  <footer class="footer">
+    <!-- UPDATE: Your name below -->
+    <p>Designed &amp; built by <strong>Your Name</strong> · University of Kelaniya</p>
+    <p class="footer-year" id="footerYear"></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
