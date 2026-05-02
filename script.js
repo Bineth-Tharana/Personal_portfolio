@@ -3,7 +3,7 @@
    ════════════════════════════════════════════════════════════ */
 
 /* ─── CUSTOM CURSOR ─────────────────────────────────────── */
-const cursor   = document.getElementById('cursor');
+const cursor = document.getElementById('cursor');
 const follower = document.getElementById('cursorFollower');
 let mouseX = 0, mouseY = 0;
 let followerX = 0, followerY = 0;
@@ -12,7 +12,7 @@ document.addEventListener('mousemove', e => {
   mouseX = e.clientX;
   mouseY = e.clientY;
   cursor.style.left = mouseX + 'px';
-  cursor.style.top  = mouseY + 'px';
+  cursor.style.top = mouseY + 'px';
 });
 
 // Smooth follower animation
@@ -20,19 +20,19 @@ document.addEventListener('mousemove', e => {
   followerX += (mouseX - followerX) * 0.14;
   followerY += (mouseY - followerY) * 0.14;
   follower.style.left = followerX + 'px';
-  follower.style.top  = followerY + 'px';
+  follower.style.top = followerY + 'px';
   requestAnimationFrame(animateFollower);
 })();
 
 // Scale up follower on hoverable elements
 document.querySelectorAll('a, button, .project-card, .social-btn').forEach(el => {
   el.addEventListener('mouseenter', () => {
-    follower.style.width  = '56px';
+    follower.style.width = '56px';
     follower.style.height = '56px';
     follower.style.opacity = '0.3';
   });
   el.addEventListener('mouseleave', () => {
-    follower.style.width  = '32px';
+    follower.style.width = '32px';
     follower.style.height = '32px';
     follower.style.opacity = '1';
   });
@@ -75,7 +75,7 @@ const skillObserver = new IntersectionObserver((entries) => {
     if (entry.isIntersecting) {
       entry.target.querySelectorAll('.skill-item').forEach(item => {
         const level = item.getAttribute('data-level') || '50';
-        const fill  = item.querySelector('.skill-fill');
+        const fill = item.querySelector('.skill-fill');
         if (fill) {
           setTimeout(() => {
             fill.style.width = level + '%';
@@ -107,7 +107,7 @@ const yearEl = document.getElementById('footerYear');
 if (yearEl) yearEl.textContent = '© ' + new Date().getFullYear();
 
 /* ─── ACTIVE NAV HIGHLIGHT ───────────────────────────────── */
-const sections  = document.querySelectorAll('section[id]');
+const sections = document.querySelectorAll('section[id]');
 const navAnchors = document.querySelectorAll('.nav-links a');
 
 const sectionObserver = new IntersectionObserver((entries) => {
@@ -145,7 +145,7 @@ if (heroGrid) {
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setClearColor(0x000000, 0);
 
-  const scene  = new THREE.Scene();
+  const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(60, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
   camera.position.set(0, 0, 5);
 
@@ -163,12 +163,12 @@ if (heroGrid) {
   requestAnimationFrame(resize);
 
   /* — Accent color — */
-  const ACCENT = 0x7c9eff;
-  const WHITE  = 0xa0c0ff;
+  const ACCENT = 0x4f8eff;
+  const WHITE = 0x93c5ff;
 
   /* — Central glowing wireframe icosahedron — */
-  const icoGeo  = new THREE.IcosahedronGeometry(1.4, 1);
-  const icoMat  = new THREE.MeshBasicMaterial({
+  const icoGeo = new THREE.IcosahedronGeometry(1.4, 1);
+  const icoMat = new THREE.MeshBasicMaterial({
     color: ACCENT, wireframe: true, transparent: true, opacity: 0.18
   });
   const ico = new THREE.Mesh(icoGeo, icoMat);
@@ -201,10 +201,10 @@ if (heroGrid) {
   const particleCount = 180;
   const positions = new Float32Array(particleCount * 3);
   for (let i = 0; i < particleCount; i++) {
-    const r     = 2.2 + Math.random() * 2.5;
+    const r = 2.2 + Math.random() * 2.5;
     const theta = Math.random() * Math.PI * 2;
-    const phi   = Math.acos(2 * Math.random() - 1);
-    positions[i * 3]     = r * Math.sin(phi) * Math.cos(theta);
+    const phi = Math.acos(2 * Math.random() - 1);
+    positions[i * 3] = r * Math.sin(phi) * Math.cos(theta);
     positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
     positions[i * 3 + 2] = r * Math.cos(phi);
   }
@@ -219,7 +219,7 @@ if (heroGrid) {
   /* — Mouse parallax — */
   let targetX = 0, targetY = 0;
   document.addEventListener('mousemove', e => {
-    targetX = (e.clientX / window.innerWidth  - 0.5) * 0.8;
+    targetX = (e.clientX / window.innerWidth - 0.5) * 0.8;
     targetY = (e.clientY / window.innerHeight - 0.5) * 0.5;
   });
 
@@ -229,12 +229,12 @@ if (heroGrid) {
     requestAnimationFrame(animate);
     const t = clock.getElapsedTime();
 
-    ico.rotation.x      = t * 0.18 + targetY * 0.6;
-    ico.rotation.y      = t * 0.24 + targetX * 0.6;
+    ico.rotation.x = t * 0.18 + targetY * 0.6;
+    ico.rotation.y = t * 0.24 + targetX * 0.6;
     icoSolid.rotation.x = ico.rotation.x;
     icoSolid.rotation.y = ico.rotation.y;
 
-    ring.rotation.z  = t * 0.12;
+    ring.rotation.z = t * 0.12;
     ring2.rotation.y = t * 0.08;
 
     particles.rotation.y = t * 0.04;
@@ -256,7 +256,7 @@ if (heroGrid) {
   let W, H, dots = [];
 
   function setup() {
-    W = c.width  = window.innerWidth;
+    W = c.width = window.innerWidth;
     H = c.height = window.innerHeight;
     dots = Array.from({ length: 60 }, () => ({
       x: Math.random() * W, y: Math.random() * H,
@@ -268,7 +268,7 @@ if (heroGrid) {
 
   function draw() {
     ctx.clearRect(0, 0, W, H);
-    ctx.fillStyle = '#7c9eff';
+    ctx.fillStyle = '#4f8eff';
     dots.forEach(d => {
       d.x += d.vx; d.y += d.vy;
       if (d.x < 0) d.x = W; if (d.x > W) d.x = 0;
