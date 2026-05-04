@@ -159,72 +159,65 @@ if (heroGrid) {
 
 /* ─── THREE.JS 3D SCENE ──────────────────────────────────── */
 (function initThree() {
-  window.addEventListener('load', function initThree() {
-    const canvas = document.getElementById('heroCanvas');
-    if (!canvas || typeof THREE === 'undefined') return;
-  });
+  const canvas = document.getElementById('heroCanvas');
+  if (!canvas || typeof THREE === 'undefined') return;
 
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setClearColor(0x000000, 0);
 
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(60, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
-  camera.position.set(0, 0, 5);
+  const camera = new THREE.PerspectiveCamera(55, 1, 0.1, 100);
+  camera.position.set(0, 0, 5.5);
 
-  /* — Resize handler — */
   function resize() {
     const rect = canvas.getBoundingClientRect();
-    const w = rect.width || canvas.offsetWidth || window.innerWidth * 0.55;
-    const h = rect.height || canvas.offsetHeight || window.innerHeight;
+    const w = rect.width || window.innerWidth * 0.55;
+    const h = rect.height || window.innerHeight;
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
   }
   window.addEventListener('resize', resize);
-  // Defer so browser has painted and canvas has real dimensions
-  requestAnimationFrame(resize);
+  window.addEventListener('load', resize);
+  resize();
 
-  /* — Accent color — */
-  const ACCENT = 0x4f8eff;
-  const WHITE = 0x93c5ff;
+  const COLOR_A = new THREE.Color(0x4f8eff);
+  const COLOR_B = new THREE.Color(0xff69b4);
+  const COLOR_C = new THREE.Color(0x5aff8e);
+  const COLOR_D = new THREE.Color(0xffc24f);
+  const COLOR_E = new THREE.Color(0x8f62ff);
 
-  /* — Central glowing wireframe icosahedron — */
   const icoGeo = new THREE.IcosahedronGeometry(1.4, 1);
-  const icoMat = new THREE.MeshBasicMaterial({
-    color: ACCENT, wireframe: true, transparent: true, opacity: 0.18
-  });
+  const icoMat = new THREE.MeshBasicMaterial({ color: COLOR_A, wireframe: true, transparent: true, opacity: 0.18 });
   const ico = new THREE.Mesh(icoGeo, icoMat);
   scene.add(ico);
 
-  /* — Inner solid icosahedron (subtle fill) — */
-  const icoSolidMat = new THREE.MeshBasicMaterial({
-    color: 0x0c0c0c, transparent: true, opacity: 0.7
-  });
-  const icoSolid = new THREE.Mesh(new THREE.IcosahedronGeometry(1.38, 1), icoSolidMat);
+  const icoSolid = new THREE.Mesh(
+    new THREE.IcosahedronGeometry(1.36, 1),
+    new THREE.MeshBasicMaterial({ color: 0x050a19, transparent: true, opacity: 0.72 })
+  );
   scene.add(icoSolid);
 
-  /* — Orbiting ring — */
-  const ringGeo = new THREE.TorusGeometry(2.1, 0.012, 8, 120);
-  const ringMat = new THREE.MeshBasicMaterial({ color: ACCENT, transparent: true, opacity: 0.35 });
-  const ring = new THREE.Mesh(ringGeo, ringMat);
-  ring.rotation.x = Math.PI / 2.2;
+  const ring = new THREE.Mesh(
+    new THREE.TorusGeometry(2.2, 0.01, 8, 120),
+    new THREE.MeshBasicMaterial({ color: COLOR_B, transparent: true, opacity: 0.35 })
+  );
+  ring.rotation.x = Math.PI / 2.1;
   scene.add(ring);
 
-  /* — Second tilted ring — */
   const ring2 = new THREE.Mesh(
-    new THREE.TorusGeometry(2.5, 0.007, 8, 120),
-    new THREE.MeshBasicMaterial({ color: WHITE, transparent: true, opacity: 0.08 })
+    new THREE.TorusGeometry(2.5, 0.008, 8, 120),
+    new THREE.MeshBasicMaterial({ color: COLOR_C, transparent: true, opacity: 0.14 })
   );
   ring2.rotation.x = Math.PI / 3;
   ring2.rotation.z = Math.PI / 5;
   scene.add(ring2);
 
-  /* — Floating particle dots — */
-  const particleCount = 180;
+  const particleCount = 160;
   const positions = new Float32Array(particleCount * 3);
   for (let i = 0; i < particleCount; i++) {
-    const r = 2.2 + Math.random() * 2.5;
+    const r = 2.4 + Math.random() * 2.2;
     const theta = Math.random() * Math.PI * 2;
     const phi = Math.acos(2 * Math.random() - 1);
     positions[i * 3] = r * Math.sin(phi) * Math.cos(theta);
@@ -233,38 +226,54 @@ if (heroGrid) {
   }
   const partGeo = new THREE.BufferGeometry();
   partGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-  const partMat = new THREE.PointsMaterial({
-    color: ACCENT, size: 0.03, transparent: true, opacity: 0.6
-  });
-  const particles = new THREE.Points(partGeo, partMat);
+  const particles = new THREE.Points(
+    partGeo,
+    new THREE.PointsMaterial({ color: COLOR_D, size: 0.04, transparent: true, opacity: 0.6 })
+  );
   scene.add(particles);
 
-  /* — Mouse parallax — */
-  let targetX = 0, targetY = 0;
+  const accentRing = new THREE.Mesh(
+    new THREE.TorusGeometry(1.9, 0.02, 16, 160),
+    new THREE.MeshBasicMaterial({ color: COLOR_E, transparent: true, opacity: 0.22 })
+  );
+  accentRing.rotation.x = Math.PI / 2.4;
+  accentRing.rotation.z = Math.PI / 6;
+  scene.add(accentRing);
+
+  let targetX = 0;
+  let targetY = 0;
   document.addEventListener('mousemove', e => {
-    targetX = (e.clientX / window.innerWidth - 0.5) * 0.8;
+    targetX = (e.clientX / window.innerWidth - 0.5) * 0.9;
     targetY = (e.clientY / window.innerHeight - 0.5) * 0.5;
   });
 
-  /* — Animation loop — */
   const clock = new THREE.Clock();
   function animate() {
     requestAnimationFrame(animate);
     const t = clock.getElapsedTime();
+    const hue = (t * 20) % 360;
+    const dynamicColor = new THREE.Color(`hsl(${hue}, 85%, 60%)`);
+    const secondaryColor = new THREE.Color(`hsl(${(hue + 70) % 360}, 82%, 62%)`);
+    const tertiaryColor = new THREE.Color(`hsl(${(hue + 140) % 360}, 78%, 68%)`);
 
-    ico.rotation.x = t * 0.18 + targetY * 0.6;
-    ico.rotation.y = t * 0.24 + targetX * 0.6;
-    icoSolid.rotation.x = ico.rotation.x;
-    icoSolid.rotation.y = ico.rotation.y;
+    ico.rotation.x = t * 0.16 + targetY * 0.5;
+    ico.rotation.y = t * 0.2 + targetX * 0.55;
+    icoSolid.rotation.copy(ico.rotation);
 
-    ring.rotation.z = t * 0.12;
-    ring2.rotation.y = t * 0.08;
+    ring.rotation.z = t * 0.1;
+    ring2.rotation.y = t * 0.07;
+    accentRing.rotation.z = t * -0.14;
 
-    particles.rotation.y = t * 0.04;
-    particles.rotation.x = targetY * 0.3;
+    particles.rotation.y = t * 0.03;
+    particles.rotation.x = targetY * 0.25;
 
-    /* subtle breathe on opacity */
-    icoMat.opacity = 0.13 + 0.07 * Math.sin(t * 0.9);
+    icoMat.color.copy(dynamicColor);
+    icoMat.opacity = 0.14 + 0.06 * Math.sin(t * 0.9);
+    ring.material.color.copy(secondaryColor);
+    ring2.material.color.copy(tertiaryColor);
+    accentRing.material.color.copy(dynamicColor);
+    particles.material.color.copy(new THREE.Color(`hsl(${(hue + 210) % 360}, 78%, 70%)`));
+    icoSolid.material.color.setHSL((hue / 360 + 0.55) % 1, 0.15, 0.10);
 
     renderer.render(scene, camera);
   }
