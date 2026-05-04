@@ -102,6 +102,29 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
   });
 });
 
+const contactForm = document.getElementById('contactForm');
+const contactMessage = document.getElementById('contactMessage');
+if (contactForm) {
+  contactForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = contactForm.name.value.trim();
+    const email = contactForm.email.value.trim();
+    const message = contactForm.message.value.trim();
+    if (!name || !email || !message) {
+      contactMessage.textContent = 'Please fill in all fields.';
+      return;
+    }
+
+    contactMessage.textContent = 'Message ready to send. Opening email client...';
+    const mailLink = `mailto:yourname@gmail.com?subject=${encodeURIComponent('Contact from ' + name)}&body=${encodeURIComponent(message + '\n\n' + name + ' | ' + email)}`;
+    window.location.href = mailLink;
+    contactForm.reset();
+    setTimeout(() => {
+      if (contactMessage) contactMessage.textContent = '';
+    }, 6000);
+  });
+}
+
 /* ─── FOOTER YEAR ────────────────────────────────────────── */
 const yearEl = document.getElementById('footerYear');
 if (yearEl) yearEl.textContent = '© ' + new Date().getFullYear();
