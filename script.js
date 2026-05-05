@@ -105,23 +105,42 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
 const contactForm = document.getElementById('contactForm');
 const contactMessage = document.getElementById('contactMessage');
 if (contactForm) {
-  contactForm.addEventListener('submit', (e) => {
+  contactForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const name = contactForm.name.value.trim();
-    const email = contactForm.email.value.trim();
-    const message = contactForm.message.value.trim();
-    if (!name || !email || !message) {
-      contactMessage.textContent = 'Please fill in all fields.';
-      return;
+    const data = new FormData(contactForm);
+    const name = data.get('name')?.toString().trim() || 'Friend';
+    const email = data.get('email')?.toString().trim() || '';
+    const subject = `New portfolio message from ${name}`;
+    data.set('_replyto', email);
+    data.set('_subject', subject);
+
+    try {
+      const res = await fetch(contactForm.action, {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (res.ok) {
+        contactMessage.textContent = `✅ Thanks, ${name}! Your message was sent to bineththarana@gmail.com.`;
+        contactForm.reset();
+      } else {
+        throw new Error('Form submission failed');
+      }
+    } catch (error) {
+      const body = [
+        `Name: ${name}`,
+        `Email: ${email}`,
+        `Company: ${data.get('company') || 'N/A'}`,
+        `Role: ${data.get('role') || 'N/A'}`,
+        `Message: ${data.get('message') || ''}`
+      ].join('\n');
+      const mailto = `mailto:bineththarana@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      window.location.href = mailto;
+      contactMessage.textContent = `✅ Opening your email app to send the message to bineththarana@gmail.com.`;
     }
 
-    contactMessage.textContent = 'Message ready to send. Opening email client...';
-    const mailLink = `mailto:yourname@gmail.com?subject=${encodeURIComponent('Contact from ' + name)}&body=${encodeURIComponent(message + '\n\n' + name + ' | ' + email)}`;
-    window.location.href = mailLink;
-    contactForm.reset();
-    setTimeout(() => {
-      if (contactMessage) contactMessage.textContent = '';
-    }, 6000);
+    setTimeout(() => { contactMessage.textContent = ''; }, 6000);
   });
 }
 
